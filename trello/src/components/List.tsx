@@ -95,7 +95,7 @@ function List ({tasks, setData, type}: TListProps) {
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay/>
-          <ModalContent>
+          <ModalContent pb={5}>
             <ModalHeader>
               {isEditTitle ? (
                 <InputGroup
@@ -155,9 +155,12 @@ function List ({tasks, setData, type}: TListProps) {
               {todos.length === 0 ? (
                 <HStack
                   display="flex"
-                  bg="gray.200"
+                  bg="gray.100"
                   marginTop={5}
                   padding={3}
+                  borderRadius={4}
+                  cursor="pointer"
+                  _hover={{ background : 'gray.200'}}
                   onClick={() => {
                     setIsCreateTodo.on();
                   }}
@@ -174,13 +177,28 @@ function List ({tasks, setData, type}: TListProps) {
                  )}
                 </HStack>
               ) : (
-                <CheckboxGroup>
-                  {todos.map((todo) => {
-                    return (
-                      <Checkbox key={todo.id}>{todo.content}</Checkbox>
-                    )
-                  })}
-                </CheckboxGroup>
+                <Stack pt={3}>
+                  <CheckboxGroup>
+                    {todos.map((todo) => {
+                      return (
+                        <Checkbox defaultChecked={todo.isDone} key={todo.id}>{todo.content}</Checkbox>
+                      )
+                    })}
+                  </CheckboxGroup>
+                  <Stack
+                    cursor="pointer"
+                    _hover={{ background: 'gray.200' }} 
+                    display="flex"
+                    bg="gray.100" 
+                    padding={2} 
+                    borderRadius={4} 
+                    alignItems="center"
+                    onClick={() => setIsCreateTodo.on()}
+                  >
+                    <AddIcon
+                      fontSize={10} fontWeight={900}/>
+                  </Stack>
+                </Stack>
               )}
             </ModalBody>
           </ModalContent>
