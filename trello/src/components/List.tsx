@@ -52,6 +52,24 @@ function List ({tasks, setData, type}: TListProps) {
       }
     },[description, setData, tasks, title, type]);
 
+  const onUpdateDescription = useCallback(
+    (id: string) => {
+      const i = tasks.findIndex((item) => item.id === id);
+  
+      const updatedTask = {
+        id,
+        title,
+        description,
+        // TODO: drag drop 으로 타입 변경
+        type,
+      }
+  
+      if(updatedTask.id) {
+        setData([...tasks.slice(0, i), updatedTask, ...tasks.slice(i + 1)]);
+      }
+    },[description, setData, tasks, title, type]
+  )
+
   function onCreate () {
     const id = nanoid();
     setTaskID(id);
@@ -116,7 +134,7 @@ function List ({tasks, setData, type}: TListProps) {
                       <CheckIcon
                         onClick={() => {
                           if(isEditMode) {
-                            onUpdate(taskID);
+                            onUpdateDescription(taskID);
                           }
                           setIsEditDescription.off();
                         }}
