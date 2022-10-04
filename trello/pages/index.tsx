@@ -3,22 +3,7 @@ import type { NextPage } from 'next'
 import { useEffect, useState } from 'react';
 import List from '../src/components/List';
 import useSWR from 'swr';
-
-export type TaskType = 'todo' | 'in-progress' | 'done';
-
-export type Todo = {
-  id: string;
-  isDone: boolean;
-  content: string;
-}
-
-export type Task = {
-  id: string;
-  type: TaskType;
-  title: string;
-  description: string;
-  todos?: Todo[];
-}
+import { Task } from '../src/context';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -37,9 +22,7 @@ const Home: NextPage = () => {
   if(!data) {
     return <div>Loading...</div>
   }
-  // TODO - 삭제 버튼은 X Icon 로 변경
-  // TODO - 맨 위로 추가 되도록 구현
-  // TODO - 위, 아래 버튼 추가
+  
   return (
     <>
       <HStack alignItems="flex-start" p={4} >
